@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route } from "react-router-dom";
 import "../App.css";
 import NavBar from "./NavBar";
 import PaintingsList from "./PaintingsList";
@@ -9,7 +10,8 @@ import NotFound from "./NotFound";
 class App extends Component {
   state = {
     paintingsList: [],
-    searchTerm: ""
+    searchTerm: "",
+    selectedPainting: null
   };
 
   componentDidMount() {
@@ -41,17 +43,42 @@ class App extends Component {
           color="blue"
           subtitle="List of Paintings"
         />
-        <About />
-        <PaintingDetails painting={this.state.selectedPainting} />
-        <PaintingsList
-          onSearchHandler={this.onSearchHandler}
-          filterTerm={this.state.searchTerm}
-          paintings={this.state.paintingsList}
-          onSelectPainting={this.onSelectPainting}
+        <Route exact path="/about" component={About} />
+        <Route
+          path="/paintings/:id"
+          render={props => {
+            return (
+              <PaintingDetails
+                painting={this.state.paintingsList.find(
+                  p => p.id === props.match.params.id
+                )}
+              />
+            );
+          }}
+        />
+
+        <Route
+          path="/"
+          render={() => (
+            <PaintingsList
+              onSearchHandler={this.onSearchHandler}
+              filterTerm={this.state.searchTerm}
+              paintings={this.state.paintingsList}
+              onSelectPainting={this.onSelectPainting}
+            />
+          )}
         />
       </div>
     );
   }
 }
-
+/*
+<PaintingDetails painting={this.state.selectedPainting} />;
+<PaintingsList
+          onSearchHandler={this.onSearchHandler}
+          filterTerm={this.state.searchTerm}
+          paintings={this.state.paintingsList}
+          onSelectPainting={this.onSelectPainting}
+        />
+*/
 export default App;

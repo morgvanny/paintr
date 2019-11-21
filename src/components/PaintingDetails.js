@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const PaintingDetails = ({ painting }) => {
   return painting ? (
@@ -15,7 +15,7 @@ const PaintingDetails = ({ painting }) => {
         </div>
       </div>
     </div>
-  ) : null
+  ) : null;
 };
 
-export default PaintingDetails
+export default PaintingDetails;
